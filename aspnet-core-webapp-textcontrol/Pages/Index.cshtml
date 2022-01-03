@@ -19,3 +19,49 @@
         settings.Dock = DockStyle.Window;
     }).LoadText("App_Data/invoice.docx", StreamType.WordprocessingML).Render()
 </div>
+
+<div class="textcontrol-actions">
+    <button onclick="ExportPDF()" class="btn mt-3 btn-success">Export PDF</button>
+</div>
+
+<script>
+
+function ExportPDF() {
+
+    var bDocument;
+    var serviceURL = "@Url.Action("ExportPDF", "TX")";
+    // var serviceURL = "/api/TX/ExportPDF";
+    // save document
+    TXTextControl.saveDocument(TXTextControl.StreamType.InternalUnicodeFormat, function (e) {
+        bDocument = e.data;
+        // send document to controller
+        $.ajax({
+            type: "POST",
+            url: serviceURL,
+            data: {
+                document: e.data
+            },
+            success: successFunc,
+            error: errorFunc
+        });
+    });
+}
+
+function successFunc(data, status) {
+    // create temporary link to download document
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:application/octet-stream;base64,' + data);
+    element.setAttribute('download', "test.pdf");
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    // simulate click
+    element.click();
+    // remove the link
+    document.body.removeChild(element);
+}
+
+function errorFunc() {
+    alert("Error");
+}
+
+</script>

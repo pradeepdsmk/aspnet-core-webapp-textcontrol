@@ -112,6 +112,9 @@ ipch/
 *.VC.db
 *.VC.VC.opendb
 
+#TXTextControl dll files
+tx30_*.dll
+
 # Visual Studio profiler
 *.psess
 *.vsp

@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace aspnet_core_webapp_textcontrol
 {
@@ -50,10 +46,63 @@ namespace aspnet_core_webapp_textcontrol
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                    name: "ExportPDF",
+                    pattern: "{controller=TX}/{action=ExportPDF}"
+                );
+
+                //endpoints.MapPost("/api/TX/ExportPDF", async context => {
+
+                //    // read request body into document variable
+                //    string? document;
+
+                //    // Leave the body open so the next middleware can read it.
+                //    // context.Request.EnableBuffering();
+
+                //    using (var reader = new StreamReader(
+                //        context.Request.Body,
+                //        encoding: Encoding.UTF8,
+                //        detectEncodingFromByteOrderMarks: false,
+                //        bufferSize: 1024,
+                //        leaveOpen: true))
+                //    {
+                //        var requestBodyStr = await reader.ReadToEndAsync();
+                //        dynamic requestBody = JsonConvert.DeserializeObject<dynamic>(requestBodyStr);
+                //        document = requestBody.document;
+
+                //        // Reset the request body stream position so the next middleware can read it
+                //        context.Request.Body.Position = 0;
+                //    }
+
+
+                //    // context.Request.Body.Seek(0, System.IO.SeekOrigin.Begin);
+
+                //    byte[] bPDF;
+
+                //    // create temporary ServerTextControl
+                //    using (TXTextControl.ServerTextControl tx = new TXTextControl.ServerTextControl())
+                //    {
+                //        tx.Create();
+
+                //        // load the document
+                //        tx.Load(Convert.FromBase64String(document), TXTextControl.BinaryStreamType.InternalUnicodeFormat);
+
+                //        TXTextControl.SaveSettings saveSettings = new TXTextControl.SaveSettings()
+                //        {
+                //            CreatorApplication = "TX Text Control Sample Application",
+                //        };
+
+                //        // save the document as PDF
+                //        tx.Save(out bPDF, TXTextControl.BinaryStreamType.AdobePDF, saveSettings);
+                //    }
+
+                //    // return as Base64 encoded string
+                //    var responseBody = Convert.ToBase64String(bPDF);
+
+                //    await context.Response.WriteAsync("Hello World!!");
+                //});
             });
-
-
-
 
 
 

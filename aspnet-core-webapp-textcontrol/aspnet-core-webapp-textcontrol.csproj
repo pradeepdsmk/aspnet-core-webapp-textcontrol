@@ -6,7 +6,78 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="licenses.licx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="licenses.licx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="TXTextControl.Web" Version="30.0.1000.500" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TXDocumentServer">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\TXDocumentServer.dll</HintPath>
+    </Reference>
+    <Reference Include="TXDrawing">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\TXDrawing.dll</HintPath>
+    </Reference>
+    <Reference Include="txic">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\bin64\txic.dll</HintPath>
+    </Reference>
+    <Reference Include="txkernel">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\bin64\txkernel.dll</HintPath>
+    </Reference>
+    <Reference Include="TXTextControl">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\TXTextControl.dll</HintPath>
+    </Reference>
+    <Reference Include="TXTextControl.Server">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\TXTextControl.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="txtools">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\bin64\txtools.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tx30_css.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tx30_doc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tx30_dox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tx30_htm.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tx30_pdf.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tx30_rtf.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tx30_xlx.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tx30_xml.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+	
+  <Target Name="WorkaroundMSBuild2836" BeforeTargets="CompileLicxFiles">
+	<PropertyGroup>
+	    <_OriginalTargetFrameworkVersion>$(TargetFrameworkVersion)</_OriginalTargetFrameworkVersion>
+	    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+	</PropertyGroup>
+  </Target>
+  <Target Name="UndoWorkaroundMSBuild2836" AfterTargets="CompileLicxFiles">
+	<PropertyGroup>
+	    <TargetFrameworkVersion>$(_OriginalTargetFrameworkVersion)</TargetFrameworkVersion>
+	</PropertyGroup>
+  </Target>
 
 </Project>
