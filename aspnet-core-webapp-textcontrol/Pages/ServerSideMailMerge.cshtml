@@ -1,0 +1,95 @@
+﻿@page
+@model aspnet_core_webapp_textcontrol.Pages.ServerSideMailMergeModel
+@{
+    ViewData["Title"] = "Server side mail merge";
+}
+
+@using TXTextControl.Web.MVC.DocumentViewer
+
+<div class="row">
+    <div class="col-4">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputFirstname">SalesOrderID</label>
+                <input autocomplete="off" value="12345678" type="text" class="form-control"
+                       id="exampleInputFirstname" aria-describedby="firstName" placeholder="Enter SalesOrderID">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputName">OrderDate</label>
+                <input autocomplete="off" value="03-01-2022" type="text" class="form-control"
+                       id="exampleInputName" aria-describedby="Name" placeholder="Enter OrderDate">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputCompany">SubTotal</label>
+                <input autocomplete="off" value="300" type="text" class="form-control"
+                       id="exampleInputCompany" aria-describedby="Company" placeholder="Enter SubTotal">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputStreet">TaxAmt</label>
+                <input autocomplete="off" value="54" type="text" class="form-control"
+                       id="exampleInputStreet" aria-describedby="Street" placeholder="Enter TaxAmt">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputZip">Freight</label>
+                <input autocomplete="off" value="40" type="text" class="form-control"
+                       id="exampleInputZip" aria-describedby="Zip" placeholder="Enter Freight">
+            </div>
+        </form>
+
+        <button onclick="Merge()" class="btn mt-3 btn-success">Merge Template</button>
+    </div>
+    <div class="col-8">
+        <div class="tx-container">
+            @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
+
+            @Html.TXTextControl().DocumentViewer(settings =>
+            {
+                //settings.DocumentPath = Server.MapPath("~/App_Data/Documents/reporting_concept.docx");
+
+                // settings.DocumentPath = System.IO.Path.Combine(env.ContentRootPath, "App_Data/Documents/reporting_concept.docx");
+                settings.DocumentPath = System.IO.Path.Combine(env.ContentRootPath, "App_Data/invoice.docx");
+
+                settings.Dock = DocumentViewerSettings.DockStyle.Fill;
+                settings.IsSelectionActivated = false;
+                settings.ShowThumbnailPane = false;
+            }).Render()
+        </div>
+    </div>
+</div>
+
+<script>
+    function Merge() {
+
+    var bDocument;
+    // var serviceURL = "@Url.Action("ReportingMerge", "TX")";
+        var serviceURL = "/api/TX/ReportingMerge";
+
+    var person = {
+        SalesOrderID: $("#exampleInputFirstname").val(),
+        OrderDate: $("#exampleInputName").val(),
+        SubTotal: $("#exampleInputCompany").val(),
+        TaxAmt: $("#exampleInputStreet").val(),
+        Freight: $("#exampleInputZip").val()
+    };
+
+    // send document to controller
+    $.ajax({
+        type: "POST",
+        url: serviceURL,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(person),
+        success: successFunc,
+        error: errorFunc
+    });
+
+}
+
+function successFunc(data, status) {
+    TXDocumentViewer.loadDocument(data, "results.tx");
+    TXDocumentViewer.toggleSidebar();
+}
+
+function errorFunc() {
+    alert("Error");
+}
+</script>

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="TXTextControl.Web" Version="30.0.1000.500" />
+    <PackageReference Include="TXTextControl.Web.DocumentViewer" Version="30.0.400.500" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +30,9 @@
     </Reference>
     <Reference Include="txkernel">
       <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\bin64\txkernel.dll</HintPath>
+    </Reference>
+    <Reference Include="txpdf">
+      <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\txpdf.dll</HintPath>
     </Reference>
     <Reference Include="TXTextControl">
       <HintPath>..\..\..\..\..\..\Program Files\Text Control GmbH\TX Text Control 30.0.NET Server for ASP.NET\Assembly\TXTextControl.dll</HintPath>

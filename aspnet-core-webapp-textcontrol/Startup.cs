@@ -52,6 +52,11 @@ namespace aspnet_core_webapp_textcontrol
                     pattern: "{controller=TX}/{action=ExportPDF}"
                 );
 
+                endpoints.MapControllerRoute(
+                    name: "ReportingMerge",
+                    pattern: "{controller=TX}/{action=ReportingMerge}"
+                );
+
                 //endpoints.MapPost("/api/TX/ExportPDF", async context => {
 
                 //    // read request body into document variable
